@@ -13,6 +13,7 @@ public abstract class Creature extends Entity {
             DEFAULT_CREATURE_HEIGHT = 16 * scale;
 
     protected int health;
+    protected boolean hasKey = false;
     protected boolean onFloor = false;
     protected float movementVelocity;
     protected double xMove, yMove;
@@ -44,6 +45,9 @@ public abstract class Creature extends Entity {
     }
 
     protected boolean collisionWithTile(int x, int y){
+        if (handler.getWorld().getTile(x, y).isKey()){
+            hasKey = true;
+        }
         return handler.getWorld().getTile(x, y).isSolid();
     }
 

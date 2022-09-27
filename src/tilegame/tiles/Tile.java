@@ -9,7 +9,9 @@ public class Tile {
     public static Tile grassTile = new GrassTile(0);
     public static Tile skyTile = new SkyTile(1);
     public static Tile stoneBrick = new StoneBrick(2);
-    public static Tile rockTile = new RockTile(3);
+    public static Tile dirtTile = new DirtTile(3);
+    public static Tile rockTile = new RockTile(4);
+    public static Tile treeTile = new TreeTile(5);
 
     public static final int TILEWIDTH = 48, TILEHEIGHT = 48;
 
@@ -32,6 +34,10 @@ public class Tile {
     }
 
     public boolean isSolid() {
+        return false;
+    }
+
+    public boolean isKey(){
         return false;
     }
 

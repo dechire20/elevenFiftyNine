@@ -38,6 +38,7 @@ public class Player extends Creature{
         deadFunctionality();
         won();
         move();
+        timerDone();
         handler.getGameCamera().centerOnEntity(this);
     }
 
@@ -45,14 +46,22 @@ public class Player extends Creature{
         xVelocity = 0;
 
         // player movement
-        if (handler.getKeyManager().left) xVelocity -= movementVelocity;
-        if (handler.getKeyManager().right) xVelocity += movementVelocity;
-        // restart game
-        if (handler.getKeyManager().esc){
-            x = 48;
-            y = 10;
+        if (!handler.getGame().won){
+            if (handler.getKeyManager().left) xVelocity -= movementVelocity;
+            if (handler.getKeyManager().right) xVelocity += movementVelocity;
+            // restart game
+            if (handler.getKeyManager().esc){
+                restart();
+            }
         }
-
+        else{
+            if (handler.getKeyManager().enter && handler.getGame().won){
+                restart();
+            }
+            if (handler.getKeyManager().ctrl && handler.getGame().won){
+                System.exit(1);
+            }
+        }
 
         // player jump
         if (handler.getKeyManager().jump && onFloor) {
@@ -66,10 +75,18 @@ public class Player extends Creature{
     public void restart(){
         x = 48;
         y = 10;
+        handler.getGame().time = 60;
+        handler.getGame().won = false;
+    }
+
+    public void timerDone(){
+        if (handler.getGame().time <= 0){
+            restart();
+        }
     }
 
     public void deadFunctionality(){
-        if (isDead()){
+        if (isDead() && !handler.getGame().won){
             restart();
             deathCounter++;
         }
@@ -77,7 +94,7 @@ public class Player extends Creature{
 
     public void won(){
         if (x >= 2943){
-            restart();
+            handler.getGame().won = true;
         }
     }
 
@@ -89,6 +106,13 @@ public class Player extends Creature{
         //deadFunctionality(g);
         g.setFont(new Font("serif", Font.PLAIN, 30));
         g.drawString("deaths: " + deathCounter, 30, 30);
+        g.drawString("time: " + handler.getGame().time, 300, 30);
+
+        if (handler.getGame().won){
+            g.drawString("You Won!", handler.getWidth() / 2 - 30, handler.getHeight() / 2);
+            g.drawString("press ENTER to restart", handler.getWidth() / 2 - 100, handler.getHeight() / 2 + 30);
+            g.drawString("press CTRL to exit", handler.getWidth() / 2 - 80, handler.getHeight() / 2 + 60);
+        }
 
     }
 

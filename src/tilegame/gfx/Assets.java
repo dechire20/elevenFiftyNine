@@ -6,7 +6,7 @@ public class Assets {
 
     public static final int width = 16, height = 16;
 
-    public static BufferedImage playerLeftDirection, playerRightDirection, playerJumpLeft, playerJumpRight, stoneBrick, grass, sky, rocks;
+    public static BufferedImage playerLeftDirection, playerRightDirection, playerJumpLeft, playerJumpRight, stoneBrick, grass, sky, rocks, dirt, tree, key;
     public static BufferedImage[] playerLeft, playerRight;
 
     public static void init() {
@@ -28,9 +28,11 @@ public class Assets {
         playerJumpRight = spritesheet.crop(width * 2, height, width, height);
 
         stoneBrick = spritesheet.crop(0, height * 2, width , height);
-        grass = spritesheet.crop(width, height * 2, width, height);
+        grass = spritesheet.crop(width * 5, height * 2, width, height);
+        dirt = spritesheet.crop(width * 6, height * 2, width, height);
         sky = spritesheet.crop(width * 2, height * 2, width, height);
         rocks = spritesheet.crop(width * 3, height * 2, width, height);
+        tree = spritesheet.crop(width * 7, height * 2, width, height);
     }
 
 

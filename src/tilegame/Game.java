@@ -23,6 +23,8 @@ public class Game implements Runnable{
     private Thread thread;
 
     private double timeElapsed;
+    public int time = 60;
+    public float fps;
 
     private BufferStrategy bs;
     private Graphics g;
@@ -60,8 +62,6 @@ public class Game implements Runnable{
         keyManager.update();
         if (State.getState() != null) {
             State.getState().update();
-        }
-        if (keyManager.esc){
         }
     }
 
@@ -104,13 +104,16 @@ public class Game implements Runnable{
                 deltaTime--;
                 ticks++;
             }
-            render();
 
             if (timer >= 1000000000) {
-                System.out.println("FPS: " + ticks);
+                System.out.println("FPS:" + ticks);
+                if (time >= 1 && !won){
+                    time--;
+                }
                 timer = 0;
                 ticks = 0;
             }
+            render();
         }
 
         stop();
